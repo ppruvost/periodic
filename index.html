@@ -1,54 +1,22 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tableau périodique scolaire</title>
-  <style>
-    :root{--bg:#f4f6f9;--card:#fff;--line:#c9d4e2;--txt:#1f2937;--muted:#6b7280}
-    *{box-sizing:border-box}
-    body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--txt);padding:18px}
-    h1{text-align:center;margin:0 0 12px}
-    .top{max-width:1600px;margin:0 auto 12px;display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
-    input,select{padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:#fff;min-width:240px}
-    .legend{max-width:1600px;margin:0 auto 12px;display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
-    .tag{padding:5px 10px;border:1px solid var(--line);border-radius:999px;background:#fff;font-size:.85rem}
-    .grid{max-width:1600px;margin:0 auto;display:grid;grid-template-columns:repeat(18,minmax(42px,1fr));gap:4px}
-    .el{background:var(--card);border:1px solid var(--line);border-radius:8px;min-height:82px;padding:6px;cursor:pointer;transition:.15s;overflow:hidden}
-    .el:hover{transform:scale(1.04);box-shadow:0 6px 18px rgba(0,0,0,.12);z-index:2}
-    .n{font-size:.72rem;color:var(--muted)}
-    .s{font-size:1.35rem;font-weight:700;text-align:center;line-height:1.1;margin-top:4px}
-    .name{font-size:.7rem;text-align:center;line-height:1.05;margin-top:3px}
-    .m{font-size:.68rem;text-align:center;color:var(--muted);margin-top:3px}
-    .info{max-width:1600px;margin:14px auto 0;background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px;min-height:78px}
-    .alkali{background:#ffe4e6}.alkaline{background:#e0f2fe}.transition{background:#ede9fe}.post{background:#e5e7eb}.metalloid{background:#fef3c7}.nonmetal{background:#dcfce7}.noble{background:#fef9c3}.lanthanoid{background:#fae8ff}.actinoid{background:#ffe4d6}
-    @media (max-width:900px){.grid{grid-template-columns:repeat(9,minmax(42px,1fr))}}
-    @media (max-width:560px){.grid{grid-template-columns:repeat(6,minmax(42px,1fr))}input,select{min-width:100%}}
-  </style>
+    <meta charset="UTF-8">
+    <title>Tableau périodique - Bac Pro</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Tableau périodique scolaire</h1>
-  <div class="top">
-    <input id="search" placeholder="Chercher : nom, symbole, numéro" />
-    <select id="filter">
-      <option value="">Toutes les familles</option>
-      <option value="alkali metal">Métaux alcalins</option>
-      <option value="alkaline earth metal">Alcalino-terreux</option>
-      <option value="transition metal">Métaux de transition</option>
-      <option value="post-transition metal">Métaux pauvres</option>
-      <option value="metalloid">Métalloïdes</option>
-      <option value="diatomic nonmetal">Non-métaux</option>
-      <option value="polyatomic nonmetal">Non-métaux</option>
-      <option value="noble gas">Gaz nobles</option>
-      <option value="lanthanoid">Lanthanides</option>
-      <option value="actinoid">Actinides</option>
-    </select>
-  </div>
-  <div class="legend">
-    <span class="tag alkali">Métaux alcalins</span><span class="tag alkaline">Alcalino-terreux</span><span class="tag transition">Transition</span><span class="tag post">Post-transition</span><span class="tag metalloid">Métalloïdes</span><span class="tag nonmetal">Non-métaux</span><span class="tag noble">Gaz nobles</span><span class="tag lanthanoid">Lanthanides</span><span class="tag actinoid">Actinides</span>
-  </div>
-  <div class="grid" id="grid"></div>
-  <div class="info" id="info">Clique un élément pour lire directement sa masse molaire, son numéro atomique et son symbole.</div>
-  <script src="chimix.js"></script>
+
+<h1>Tableau périodique des éléments</h1>
+<p>Clique sur un élément pour voir ses détails</p>
+
+<div id="table"></div>
+
+<div id="details">
+    <h2>Détails</h2>
+    <p id="info">Clique sur un élément</p>
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
