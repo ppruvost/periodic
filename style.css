@@ -53,3 +53,11 @@ h1 {
     margin-right: auto;
     border: 1px solid #ccc;
 }
+
+#info svg {
+    margin-top: 10px;
+}
+
+#info text {
+    font-weight: bold;
+}
