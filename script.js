@@ -13,6 +13,7 @@ fetch("elements.json")
         function getValence(colonne) {
 
     // Groupes principaux
+    if (numero === 30) return 2; // Zinc
     if (colonne === 1) return 1;
     if (colonne === 2) return 2;
     if (colonne >= 13 && colonne <= 18) return colonne - 10;
