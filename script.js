@@ -100,7 +100,12 @@ fetch("elements.json")
         data.forEach(el => {
 
             // --- calcul valence
-            const valence = getValence(el.colonne);
+            let valence = getValence(el.colonne);
+
+            // Limite à 8 électrons (règle de l’octet simplifiée)
+            if (valence !== null) {
+                valence = Math.min(valence, 8);
+            }
 
             // --- génération Lewis (si possible)
             const lewis = valence !== null
