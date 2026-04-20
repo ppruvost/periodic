@@ -141,8 +141,8 @@ function getValence(colonne, numero) {
         data.forEach(el => {
 
             // --- calcul valence
-            let valence = getValence(el.colonne);
-
+            let valence = getValence(el.colonne, el.numero);
+            
             // Limite à 8 électrons (règle de l’octet simplifiée)
             if (valence !== null) {
                 valence = Math.min(valence, 8);
