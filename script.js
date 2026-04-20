@@ -19,7 +19,7 @@ fetch("elements.json")
 
     // Métaux de transition (approximation pédagogique)
     if (colonne >= 3 && colonne <= 12) {
-        return colonne; // ex : colonne 3 → 3 électrons
+        return Math.min(colonne, 8);
     }
 
     return null;
