@@ -60,39 +60,82 @@ fetch("elements.json")
         // ===============================
         function generateLewisAdvanced(symbole, valence) {
 
-            const positions = [
-                [50,10],[90,50],[50,90],[10,50]
-            ];
+    if (valence === null) {
+        return "<em>Pas de représentation de Lewis simple</em>";
+    }
 
-            const offsets = [
-                [0,-5],[5,0],[0,5],[-5,0]
-            ];
+    // Limite à 8 électrons (octet)
+    valence = Math.min(valence, 8);
 
-            let svgDots = "";
-            let electrons = valence;
+    // 4 côtés : haut, droite, bas, gauche
+    const sides = [
+        { x: 50, y: 10 },  // haut
+        { x: 90, y: 50 },  // droite
+        { x: 50, y: 90 },  // bas
+        { x: 10, y: 50 }   // gauche
+    ];
 
-            // --- Étape 1 : électrons célibataires (max 4)
-            const singles = Math.min(4, electrons);
-            for (let i = 0; i < singles; i++) {
-                const [x,y] = positions[i];
-                svgDots += `<circle cx="${x}" cy="${y}" r="3"/>`;
-            }
+    // Décalage pour faire un doublet
+    const offset = 5;
 
-            electrons -= singles;
+    // Tableau des côtés (nombre d’électrons par côté)
+    let electronsPerSide = [0, 0, 0, 0];
 
-            // --- Étape 2 : formation des doublets
-            for (let i = 0; i < electrons; i++) {
-                const [x,y] = positions[i % 4];
-                const [dx,dy] = offsets[i % 4];
-                svgDots += `<circle cx="${x+dx}" cy="${y+dy}" r="3"/>`;
-            }
+    let remaining = valence;
 
-            return `
-            <svg viewBox="0 0 100 100" width="120">
-                <text x="50" y="55" text-anchor="middle" font-size="20">${symbole}</text>
-                ${svgDots}
-            </svg>`;
+    // ===============================
+    // 1. Placement des célibataires
+    // ===============================
+    for (let i = 0; i < 4 && remaining > 0; i++) {
+        electronsPerSide[i]++;
+        remaining--;
+    }
+
+    // ===============================
+    // 2. Formation des doublets
+    // ===============================
+    let i = 0;
+    while (remaining > 0) {
+        if (electronsPerSide[i] === 1) {
+            electronsPerSide[i]++;
+            remaining--;
         }
+        i = (i + 1) % 4;
+    }
+
+    // ===============================
+    // 3. Génération SVG
+    // ===============================
+    let svgDots = "";
+
+    electronsPerSide.forEach((count, i) => {
+        const { x, y } = sides[i];
+
+        if (count === 1) {
+            // électron seul
+            svgDots += `<circle cx="${x}" cy="${y}" r="3"/>`;
+        }
+
+        if (count === 2) {
+            // doublet → 2 électrons légèrement décalés
+            if (i === 0 || i === 2) {
+                // haut / bas → horizontal
+                svgDots += `<circle cx="${x - offset}" cy="${y}" r="3"/>`;
+                svgDots += `<circle cx="${x + offset}" cy="${y}" r="3"/>`;
+            } else {
+                // gauche / droite → vertical
+                svgDots += `<circle cx="${x}" cy="${y - offset}" r="3"/>`;
+                svgDots += `<circle cx="${x}" cy="${y + offset}" r="3"/>`;
+            }
+        }
+    });
+
+    return `
+    <svg viewBox="0 0 100 100" width="120">
+        <text x="50" y="55" text-anchor="middle" font-size="20">${symbole}</text>
+        ${svgDots}
+    </svg>`;
+}
 
         // ===============================
         // 5. Boucle principale + enrichissement
