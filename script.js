@@ -7,22 +7,19 @@ fetch("elements.json")
 
         const table = document.getElementById("table");
 
-        // ===============================
-        // 2. Fonction : calcul des électrons de valence
-        // ===============================
-        function getValence(colonne) {
-
-    // Groupes principaux
-    if (numero === 30) return 2; // Zinc
+// ===============================
+// 2. Fonction : calcul des électrons de valence
+// ===============================
+function getValence(colonne, numero) {
+    const exceptions = {
+        21: 3,  22: 4,  23: 5,  24: 6,  25: 7,  26: 2,  27: 2,  28: 2,  29: 1,
+        30: 2,  40: 2,  41: 3,  42: 6,  43: 7,  44: 8,  45: 9,  46: 1,  47: 1,  48: 2
+    };
+    if (exceptions[numero] !== undefined) return exceptions[numero];
     if (colonne === 1) return 1;
     if (colonne === 2) return 2;
     if (colonne >= 13 && colonne <= 18) return colonne - 10;
-
-    // Métaux de transition (approximation pédagogique)
-    if (colonne >= 3 && colonne <= 12) {
-        return Math.min(colonne, 8);
-    }
-
+    if (colonne >= 3 && colonne <= 12) return Math.min(colonne, 8);
     return null;
 }
 
