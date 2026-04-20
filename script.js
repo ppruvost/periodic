@@ -11,11 +11,19 @@ fetch("elements.json")
         // 2. Fonction : calcul des électrons de valence
         // ===============================
         function getValence(colonne) {
-            if (colonne === 1) return 1;
-            if (colonne === 2) return 2;
-            if (colonne >= 13 && colonne <= 18) return colonne - 10;
-            return null; // métaux de transition → pas de Lewis simple
-        }
+
+    // Groupes principaux
+    if (colonne === 1) return 1;
+    if (colonne === 2) return 2;
+    if (colonne >= 13 && colonne <= 18) return colonne - 10;
+
+    // Métaux de transition (approximation pédagogique)
+    if (colonne >= 3 && colonne <= 12) {
+        return colonne; // ex : colonne 3 → 3 électrons
+    }
+
+    return null;
+}
 
         // ===============================
         // 3. Génération SVG simple (structure Lewis)
