@@ -4,28 +4,34 @@
 fetch("elements.json")
     .then(response => response.json())
     .then(data => {
+
         const table = document.getElementById("table");
 
         // ===============================
-        // 2. Fonction : calcul des électrons de valence
+        // 2. Électrons de valence
         // ===============================
         function getValence(colonne, numero) {
             const exceptions = {
-                21: 3,  22: 4,  23: 5,  24: 6,  25: 7,  26: 2,  27: 2,  28: 2,  29: 1,
-                30: 2,  40: 2,  41: 3,  42: 6,  43: 7,  44: 8,  45: 9,  46: 1,  47: 1,  48: 2
+                21: 3, 22: 4, 23: 5, 24: 6, 25: 7,
+                26: 2, 27: 2, 28: 2, 29: 1, 30: 2
             };
+
             if (exceptions[numero] !== undefined) return exceptions[numero];
+
             if (colonne === 1) return 1;
             if (colonne === 2) return 2;
             if (colonne >= 13 && colonne <= 18) return colonne - 10;
+
             if (colonne >= 3 && colonne <= 12) return Math.min(colonne, 8);
+
             return null;
         }
 
         // ===============================
-        // 3. Génération SVG (doublets + célibataires)
+        // 3. Lewis (doublets réels)
         // ===============================
         function generateLewisAdvanced(symbole, valence) {
+
             if (valence === null) {
                 return "<em>Pas de représentation de Lewis simple</em>";
             }
@@ -33,23 +39,23 @@ fetch("elements.json")
             valence = Math.min(valence, 8);
 
             const sides = [
-                { x: 50, y: 10 },  // haut
-                { x: 90, y: 50 },  // droite
-                { x: 50, y: 90 },  // bas
-                { x: 10, y: 50 }   // gauche
+                { x: 50, y: 10 },
+                { x: 90, y: 50 },
+                { x: 50, y: 90 },
+                { x: 10, y: 50 }
             ];
 
             const offset = 5;
             let electronsPerSide = [0, 0, 0, 0];
             let remaining = valence;
 
-            // Placement des célibataires
+            // célibataires
             for (let i = 0; i < 4 && remaining > 0; i++) {
                 electronsPerSide[i]++;
                 remaining--;
             }
 
-            // Formation des doublets
+            // doublets
             let i = 0;
             while (remaining > 0) {
                 if (electronsPerSide[i] === 1) {
@@ -60,18 +66,21 @@ fetch("elements.json")
             }
 
             let svgDots = "";
+
             electronsPerSide.forEach((count, idx) => {
                 const { x, y } = sides[idx];
+
                 if (count === 1) {
-                    svgDots += `<circle cx="${x}" cy="${y}" r="3" fill="black"/>`;
+                    svgDots += `<circle cx="${x}" cy="${y}" r="3"/>`;
                 }
+
                 if (count === 2) {
                     if (idx === 0 || idx === 2) {
-                        svgDots += `<circle cx="${x - offset}" cy="${y}" r="3" fill="black"/>`;
-                        svgDots += `<circle cx="${x + offset}" cy="${y}" r="3" fill="black"/>`;
+                        svgDots += `<circle cx="${x - offset}" cy="${y}" r="3"/>`;
+                        svgDots += `<circle cx="${x + offset}" cy="${y}" r="3"/>`;
                     } else {
-                        svgDots += `<circle cx="${x}" cy="${y - offset}" r="3" fill="black"/>`;
-                        svgDots += `<circle cx="${x}" cy="${y + offset}" r="3" fill="black"/>`;
+                        svgDots += `<circle cx="${x}" cy="${y - offset}" r="3"/>`;
+                        svgDots += `<circle cx="${x}" cy="${y + offset}" r="3"/>`;
                     }
                 }
             });
@@ -84,40 +93,127 @@ fetch("elements.json")
         }
 
         // ===============================
-        // 4. Génération SVG (couches concentriques)
+        // 4. Configuration électronique
         // ===============================
-        function generateLewisConcentric(symbole, valence) {
-            if (valence === null) {
-                return "<em>Pas de représentation de Lewis simple</em>";
+        function getElectronConfig(Z) {
+
+            const orbitals = [
+                { n: 1, l: "s", max: 2 },
+                { n: 2, l: "s", max: 2 },
+                { n: 2, l: "p", max: 6 },
+                { n: 3, l: "s", max: 2 },
+                { n: 3, l: "p", max: 6 },
+                { n: 4, l: "s", max: 2 },
+                { n: 3, l: "d", max: 10 },
+                { n: 4, l: "p", max: 6 },
+                { n: 5, l: "s", max: 2 },
+                { n: 4, l: "d", max: 10 },
+                { n: 5, l: "p", max: 6 },
+                { n: 6, l: "s", max: 2 },
+                { n: 4, l: "f", max: 14 },
+                { n: 5, l: "d", max: 10 },
+                { n: 6, l: "p", max: 6 },
+                { n: 7, l: "s", max: 2 }
+            ];
+
+            let electrons = Z;
+            let config = [];
+
+            for (let orb of orbitals) {
+                if (electrons <= 0) break;
+
+                const fill = Math.min(orb.max, electrons);
+                config.push(`${orb.n}${orb.l}${fill}`);
+                electrons -= fill;
             }
 
-            valence = Math.min(valence, 8);
-            const radii = [15, 25, 25, 35, 35, 35, 45, 45];
-            let svgDots = "";
+            return config.join(" ");
+        }
 
-            for (let i = 0; i < valence; i++) {
-                const angle = (i * 45) * (Math.PI / 180);
-                const radius = radii[i];
-                const x = 50 + radius * Math.cos(angle);
-                const y = 50 + radius * Math.sin(angle);
-                svgDots += `<circle cx="${x}" cy="${y}" r="3" fill="black"/>`;
-            }
+        // exceptions connues
+        const exceptionsConfig = {
+            24: "1s2 2s2 2p6 3s2 3p6 3d5 4s1",
+            29: "1s2 2s2 2p6 3s2 3p6 3d10 4s1"
+        };
 
-            return `
-            <svg viewBox="0 0 100 100" width="120">
-                <text x="50" y="55" text-anchor="middle" font-size="20">${symbole}</text>
-                ${svgDots}
-            </svg>`;
+        // ===============================
+        // 5. Charges ioniques
+        // ===============================
+        function getIonCharges(el) {
+
+            if (el.colonne === 1) return [+1];
+            if (el.colonne === 2) return [+2];
+            if (el.colonne === 17) return [-1];
+            if (el.colonne === 16) return [-2];
+            if (el.colonne === 15) return [-3];
+
+            const transitionIons = {
+                21: [+3],
+                22: [+4],
+                23: [+3, +5],
+                24: [+2, +3, +6],
+                25: [+2, +4, +7],
+                26: [+2, +3],
+                27: [+2, +3],
+                28: [+2],
+                29: [+1, +2],
+                30: [+2]
+            };
+
+            return transitionIons[el.numero] || [0];
         }
 
         // ===============================
-        // 5. Boucle principale + enrichissement
+        // 6. Ionisation réelle
+        // ===============================
+        function ionizeConfig(config, charge) {
+
+            let orbitals = config.split(" ").map(o => {
+                const match = o.match(/(\d+)([spdf])(\d+)/);
+                return {
+                    n: parseInt(match[1]),
+                    type: match[2],
+                    e: parseInt(match[3])
+                };
+            });
+
+            let electronsToRemove = charge;
+
+            while (electronsToRemove > 0) {
+
+                let sOrbital = orbitals
+                    .filter(o => o.type === "s" && o.e > 0)
+                    .sort((a, b) => b.n - a.n)[0];
+
+                if (sOrbital) {
+                    sOrbital.e--;
+                    electronsToRemove--;
+                    continue;
+                }
+
+                let dOrbital = orbitals
+                    .filter(o => o.type === "d" && o.e > 0)
+                    .sort((a, b) => b.n - a.n)[0];
+
+                if (dOrbital) {
+                    dOrbital.e--;
+                    electronsToRemove--;
+                }
+            }
+
+            return orbitals
+                .filter(o => o.e > 0)
+                .map(o => `${o.n}${o.type}${o.e}`)
+                .join(" ");
+        }
+
+        // ===============================
+        // 7. Boucle principale
         // ===============================
         data.forEach(el => {
+
             let valence = getValence(el.colonne, el.numero);
-            if (valence !== null) {
-                valence = Math.min(valence, 8);
-            }
+            if (valence !== null) valence = Math.min(valence, 8);
 
             const div = document.createElement("div");
             div.className = "element";
@@ -129,18 +225,40 @@ fetch("elements.json")
             `;
 
             div.onclick = () => {
-                const lewisDoublets = generateLewisAdvanced(el.symbole, valence);
-                const lewisConcentric = generateLewisConcentric(el.symbole, valence);
+
+                const charges = getIonCharges(el);
+                const baseConfig = exceptionsConfig[el.numero] || getElectronConfig(el.numero);
+
+                let ionsHTML = "";
+
+                charges.forEach(charge => {
+
+                    if (charge === 0) return;
+
+                    const ionConfig = ionizeConfig(baseConfig, charge);
+
+                    ionsHTML += `
+                    ${el.symbole}${charge > 0 ? "+" + charge : charge} :<br>
+                    → ${ionConfig}<br><br>`;
+                });
+
+                const lewis = generateLewisAdvanced(el.symbole, valence);
 
                 document.getElementById("info").innerHTML =
                     `<strong>${el.nom}</strong><br>
                      Numéro atomique : ${el.numero}<br>
-                     Masse atomique : ${el.masse}<br>
-                     Électrons de valence : ${valence ?? "—"}<br><br>
-                     <strong>Structure de Lewis (doublets) :</strong><br>
-                     ${lewisDoublets}<br><br>
-                     <strong>Structure de Lewis (couches) :</strong><br>
-                     ${lewisConcentric}`;
+                     Masse atomique : ${el.masse}<br><br>
+
+                     <strong>Configuration électronique :</strong><br>
+                     ${baseConfig}<br><br>
+
+                     <strong>Électrons de valence :</strong> ${valence ?? "—"}<br><br>
+
+                     <strong>Structure de Lewis :</strong><br>
+                     ${lewis}<br><br>
+
+                     <strong>Ions possibles :</strong><br>
+                     ${ionsHTML || "—"}`;
             };
 
             div.style.gridColumn = el.colonne;
