@@ -294,7 +294,16 @@ fetch("elements.json")
 
                     if (charge === 0) return;
 
-                    const ionConfig = ionizeConfig(baseConfig, charge);
+                    let ionConfig;
+
+                    if (charge > 0) {
+                        // cation → enlever électrons
+                        ionConfig = ionizeConfig(baseConfig, charge);
+                    } else {
+                        // anion → recalcul complet avec électrons en plus
+                        const newZ = el.numero + Math.abs(charge);
+                        ionConfig = getElectronConfig(newZ);
+                    }
 
                     ionsHTML += `
                     ${el.symbole}${charge > 0 ? "+" + charge : charge} :<br>
