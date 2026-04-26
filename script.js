@@ -168,44 +168,79 @@ fetch("elements.json")
         // ===============================
         function ionizeConfig(config, charge) {
 
-            let orbitals = config.split(" ").map(o => {
-                const match = o.match(/(\d+)([spdf])(\d+)/);
-                return {
-                    n: parseInt(match[1]),
-                    type: match[2],
-                    e: parseInt(match[3])
-                };
-            });
+    let orbitals = config.split(" ").map(o => {
+        const match = o.match(/(\d+)([spdf])(\d+)/);
+        return {
+            n: parseInt(match[1]),
+            type: match[2],
+            e: parseInt(match[3]),
+            max: o.includes("s") ? 2 :
+                 o.includes("p") ? 6 :
+                 o.includes("d") ? 10 : 14
+        };
+    });
 
-            let electronsToRemove = charge;
+    // ===============================
+    // CAS 1 : CATION (on enlève)
+    // ===============================
+    if (charge > 0) {
 
-            while (electronsToRemove > 0) {
+        let electronsToRemove = charge;
 
-                let sOrbital = orbitals
-                    .filter(o => o.type === "s" && o.e > 0)
-                    .sort((a, b) => b.n - a.n)[0];
+        while (electronsToRemove > 0) {
 
-                if (sOrbital) {
-                    sOrbital.e--;
-                    electronsToRemove--;
-                    continue;
-                }
+            let sOrbital = orbitals
+                .filter(o => o.type === "s" && o.e > 0)
+                .sort((a, b) => b.n - a.n)[0];
 
-                let dOrbital = orbitals
-                    .filter(o => o.type === "d" && o.e > 0)
-                    .sort((a, b) => b.n - a.n)[0];
-
-                if (dOrbital) {
-                    dOrbital.e--;
-                    electronsToRemove--;
-                }
+            if (sOrbital) {
+                sOrbital.e--;
+                electronsToRemove--;
+                continue;
             }
 
-            return orbitals
-                .filter(o => o.e > 0)
-                .map(o => `${o.n}${o.type}${o.e}`)
-                .join(" ");
+            let dOrbital = orbitals
+                .filter(o => o.type === "d" && o.e > 0)
+                .sort((a, b) => b.n - a.n)[0];
+
+            if (dOrbital) {
+                dOrbital.e--;
+                electronsToRemove--;
+            }
         }
+    }
+
+    // ===============================
+    // CAS 2 : ANION (on ajoute)
+    // ===============================
+    if (charge < 0) {
+
+        let electronsToAdd = Math.abs(charge);
+
+        while (electronsToAdd > 0) {
+
+            // remplir orbitales existantes (plus haute énergie)
+            let orbital = orbitals
+                .filter(o => o.e < o.max)
+                .sort((a, b) => {
+                    const order = { s: 1, p: 2, d: 3, f: 4 };
+                    return (b.n - a.n) || (order[b.type] - order[a.type]);
+                })[0];
+
+            if (orbital) {
+                orbital.e++;
+                electronsToAdd--;
+            } else {
+                break;
+            }
+        }
+    }
+
+    return orbitals
+        .filter(o => o.e > 0)
+        .map(o => `${o.n}${o.type}${o.e}`)
+        .join(" ");
+}
 
         // ===============================
         // 7. Boucle principale
