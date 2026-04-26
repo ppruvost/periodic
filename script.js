@@ -141,27 +141,51 @@ fetch("elements.json")
         // ===============================
         function getIonCharges(el) {
 
-            if (el.colonne === 1) return [+1];
-            if (el.colonne === 2) return [+2];
-            if (el.colonne === 17) return [-1];
-            if (el.colonne === 16) return [-2];
-            if (el.colonne === 15) return [-3];
+    // ===============================
+    // 1. GROUPES PRINCIPAUX
+    // ===============================
 
-            const transitionIons = {
-                21: [+3],
-                22: [+4],
-                23: [+3, +5],
-                24: [+2, +3, +6],
-                25: [+2, +4, +7],
-                26: [+2, +3],
-                27: [+2, +3],
-                28: [+2],
-                29: [+1, +2],
-                30: [+2]
-            };
+    if (el.colonne === 1) return [+1];
+    if (el.colonne === 2) return [+2];
+    if (el.colonne === 13) return [+3]; // B, Al, Ga, In
+    if (el.colonne === 14) return [+4]; // C, Si, Ge, Sn
+    if (el.colonne === 15) return [-3];
+    if (el.colonne === 16) return [-2];
+    if (el.colonne === 17) return [-1];
 
-            return transitionIons[el.numero] || [0];
-        }
+    // ===============================
+    // 2. MÉTAUX DE TRANSITION (étendus)
+    // ===============================
+
+    const transitionIons = {
+
+        // Bloc Y → Zn (période 4)
+        21: [+3],             // Sc
+        22: [+4],             // Ti
+        23: [+3, +5],         // V
+        24: [+2, +3, +6],     // Cr
+        25: [+2, +4, +7],     // Mn
+        26: [+2, +3],         // Fe
+        27: [+2, +3],         // Co
+        28: [+2],             // Ni
+        29: [+1, +2],         // Cu
+        30: [+2],             // Zn
+
+        // Période suivante (ce que tu n'avais pas)
+        39: [+3],             // Y
+        40: [+4],             // Zr
+        41: [+3, +5],         // Nb
+        42: [+4, +6],         // Mo
+        43: [+4, +7],         // Tc
+        44: [+3, +4],         // Ru
+        45: [+3],             // Rh
+        46: [+2, +4],         // Pd
+        47: [+1],             // Ag
+        48: [+2]              // Cd
+    };
+
+    return transitionIons[el.numero] || [0];
+}
 
         // ===============================
         // 6. Ionisation réelle
