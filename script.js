@@ -291,79 +291,89 @@ fetch("elements.json")
         // ===============================
         function ionizeConfig(config, charge) {
 
-    let orbitals = config.split(" ").map(o => {
-        const match = o.match(/(\d+)([spdf])(\d+)/);
-        return {
-            n: parseInt(match[1]),
-            type: match[2],
-            e: parseInt(match[3]),
-            max: o.includes("s") ? 2 :
-                 o.includes("p") ? 6 :
-                 o.includes("d") ? 10 : 14
-        };
-    });
+            // 1. détecter cœur gaz noble
+            let coreMatch = config.match(/^\[(.*?)\]/);
 
-    // ===============================
-    // CAS 1 : CATION (on enlève)
-    // ===============================
-    if (charge > 0) {
+            let core = "";
+            let rest = config;
 
-        let electronsToRemove = charge;
-
-        while (electronsToRemove > 0) {
-
-            let sOrbital = orbitals
-                .filter(o => o.type === "s" && o.e > 0)
-                .sort((a, b) => b.n - a.n)[0];
-
-            if (sOrbital) {
-                sOrbital.e--;
-                electronsToRemove--;
-                continue;
+            if (coreMatch) {
+                core = coreMatch[0]; // ex [Ar]
+                rest = config.replace(core, "").trim();
             }
 
-            let dOrbital = orbitals
-                .filter(o => o.type === "d" && o.e > 0)
-                .sort((a, b) => b.n - a.n)[0];
+            // 2. transformer le reste en liste exploitable
+            let orbitals = rest
+                .split(" ")
+                .filter(Boolean)
+                .map(o => {
+                    let m = o.match(/(\d+)([spdf])(\d+)/);
+                    return {
+                        n: parseInt(m[1]),
+                        type: m[2],
+                        e: parseInt(m[3])
+                    };
+                });
 
-            if (dOrbital) {
-                dOrbital.e--;
-                electronsToRemove--;
+            const order = { s: 1, p: 2, d: 3, f: 4 };
+
+            // ======================
+            // CAS CATION (+)
+            // ======================
+            if (charge > 0) {
+
+                let toRemove = charge;
+
+                while (toRemove > 0) {
+
+                    // on enlève toujours les électrons les plus externes
+                    let orbital = orbitals
+                        .filter(o => o.e > 0)
+                        .sort((a, b) =>
+                            (b.n - a.n) || (order[b.type] - order[a.type])
+                        )[0];
+
+                    if (!orbital) break;
+
+                    orbital.e--;
+                    toRemove--;
+                }
             }
+
+            // ======================
+            // CAS ANION (-)
+            // ======================
+            if (charge < 0) {
+
+                let toAdd = Math.abs(charge);
+
+                while (toAdd > 0) {
+
+                    // on remplit la couche externe disponible
+                    let orbital = orbitals
+                        .filter(o => o.e < (o.type === "s" ? 2 : o.type === "p" ? 6 : o.type === "d" ? 10 : 14))
+                        .sort((a, b) =>
+                            (a.n - b.n) || (order[a.type] - order[b.type])
+                        )[0];
+
+                    if (!orbital) break;
+
+                    orbital.e++;
+                    toAdd--;
+                }
+            }
+
+            // 3. reconstruction propre
+            let result = orbitals
+                .filter(o => o.e > 0)
+                .map(o => `${o.n}${o.type}${o.e}`)
+                .join(" ");
+
+            // 4. si tout est vidé → ion noble
+            if (!result) return core;
+
+            return `${core} ${result}`.trim();
         }
-    }
-
-    // ===============================
-    // CAS 2 : ANION (on ajoute)
-    // ===============================
-    if (charge < 0) {
-
-        let electronsToAdd = Math.abs(charge);
-
-        while (electronsToAdd > 0) {
-
-            // remplir orbitales existantes (plus haute énergie)
-            let orbital = orbitals
-                .filter(o => o.e < o.max)
-                .sort((a, b) => {
-                    const order = { s: 1, p: 2, d: 3, f: 4 };
-                    return (b.n - a.n) || (order[b.type] - order[a.type]);
-                })[0];
-
-            if (orbital) {
-                orbital.e++;
-                electronsToAdd--;
-            } else {
-                break;
-            }
-        }
-    }
-
-    return orbitals
-        .filter(o => o.e > 0)
-        .map(o => `${o.n}${o.type}${o.e}`)
-        .join(" ");
-}
 
         // ===============================
         // 7. Boucle principale
