@@ -139,12 +139,89 @@ fetch("elements.json")
         };
 
         // ===============================
+        // GAZ NOBLES (abréviation)
+        // ===============================
+        const nobleGases = [
+            { Z: 2, symbol: "He", config: "1s2" },
+            { Z: 10, symbol: "Ne", config: "1s2 2s2 2p6" },
+            { Z: 18, symbol: "Ar", config: "1s2 2s2 2p6 3s2 3p6" },
+            { Z: 36, symbol: "Kr", config: "1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6" },
+            { Z: 54, symbol: "Xe", config: "1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6" }
+        ];
+
+        // ===============================
+        // CONFIG ABRÉGÉE [Gaz noble]
+        // ===============================
+        function shortenConfig(config) {
+
+            for (let i = nobleGases.length - 1; i >= 0; i--) {
+
+                const noble = nobleGases[i];
+
+                if (config.startsWith(noble.config)) {
+
+                    let rest = config.replace(noble.config, "").trim();
+
+                    return `[${noble.symbol}] ${rest}`;
+                }
+            }
+
+            return config; // cas H et He
+        }
+
+        // ===============================
+        // TRI AFFICHAGE (ordre scolaire)
+        // ===============================
+        function reorderForDisplay(config) {
+
+            let parts = config.split(" ");
+
+            return parts.sort((a, b) => {
+
+                const ma = a.match(/(\d+)([spdf])/);
+                const mb = b.match(/(\d+)([spdf])/);
+
+                const na = parseInt(ma[1]);
+                const nb = parseInt(mb[1]);
+
+                const order = { s: 1, p: 2, d: 3, f: 4 };
+
+                // priorité au niveau n
+                if (na !== nb) return na - nb;
+
+                // puis type orbital
+                return order[ma[2]] - order[mb[2]];
+            }).join(" ");
+        }
+
+        // ===============================
         // FORMATAGE SPDF (avec exposants)
         // ===============================
         function formatConfig(config) {
-            return config.replace(/(\d+)([spdf])(\d+)/g, (match, n, type, e) => {
-                return `${n}${type}<sup>${e}</sup>`;
+
+            // 1. abréviation gaz noble
+            config = shortenConfig(config);
+
+            // 2. séparer cœur [Ne] du reste
+            let coreMatch = config.match(/^\[(.*?)\]/);
+
+            let core = "";
+            let rest = config;
+
+            if (coreMatch) {
+                core = coreMatch[0]; // ex: [Ar]
+                rest = config.replace(core, "").trim();
+            }
+
+            // 3. réorganiser (ordre scolaire)
+            rest = reorderForDisplay(rest);
+
+            // 4. exposants
+            rest = rest.replace(/(\d+)([spdf])(\d+)/g, (m, n, t, e) => {
+                return `${n}${t}<sup>${e}</sup>`;
             });
+
+            return core ? `${core} ${rest}` : rest;
         }
 
         // ===============================
