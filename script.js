@@ -199,27 +199,32 @@ fetch("elements.json")
         // ===============================
         function formatConfig(config) {
 
-    // abréviation gaz noble
-    config = shortenConfig(config);
+            // 1. gaz noble
+            let coreMatch = config.match(/^\[(.*?)\]/);
 
-    let coreMatch = config.match(/^\[(.*?)\]/);
-    let core = "";
-    let rest = config;
+            let core = "";
+            let rest = config;
 
-    if (coreMatch) {
-        core = coreMatch[0];
-        rest = config.replace(core, "").trim();
-    }
+            if (coreMatch) {
+                core = coreMatch[0]; // ex [Ar]
+                rest = config.replace(core, "").trim();
+            }
 
-    // IMPORTANT : on garde l’ordre naturel (PAS de reorder)
+            // 2. nettoyage : on garde juste les orbitales restantes
+            let parts = rest.split(" ").filter(Boolean);
 
-    // mise en forme des exposants
-    rest = rest.replace(/(\d+)([spdf])(\d+)/g, (m, n, t, e) => {
-        return `${n}${t}<sup>${e}</sup>`;
-    });
+            // 3. IMPORTANT : ne PAS trier (sinon tu casses l’ordre chimique réel)
 
-    return core ? `${core} ${rest}` : rest;
-}
+            // 4. exposants
+            let formatted = parts.map(p => {
+                return p.replace(/(\d+)([spdf])(\d+)/, (m, n, t, e) => {
+                    return `${n}${t}<sup>${e}</sup>`;
+                });
+            });
+
+            // 5. assemblage propre
+            return core ? `${core} ${formatted.join(" ")}` : formatted.join(" ");
+        }
 
         // ===============================
         // 5. Charges ioniques
