@@ -61,3 +61,8 @@ h1 {
 #info text {
     font-weight: bold;
 }
+
+sup {
+    font-size: 10px;
+    vertical-align: super;
+}
