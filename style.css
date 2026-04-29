@@ -1,0 +1,63 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #f4f4f4;
+}
+
+h1 {
+    margin-bottom: 10px;
+}
+
+#table {
+    display: grid;
+    grid-template-columns: repeat(18, 60px);
+    gap: 5px;
+    justify-content: center;
+    margin: 20px;
+}
+
+.element {
+    background: #ffffff;
+    border: 1px solid #ccc;
+    padding: 5px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: transform 0.2s;
+}
+
+.element:hover {
+    transform: scale(1.1);
+    background: #e0f0ff;
+}
+
+.numero {
+    font-size: 10px;
+}
+
+.symbole {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.masse {
+    font-size: 10px;
+    color: #444;
+}
+
+#details {
+    margin-top: 20px;
+    padding: 10px;
+    background: white;
+    width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid #ccc;
+}
+
+#info svg {
+    margin-top: 10px;
+}
+
+#info text {
+    font-weight: bold;
+}
