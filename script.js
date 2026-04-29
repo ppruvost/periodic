@@ -154,19 +154,28 @@ fetch("elements.json")
         // ===============================
         function shortenConfig(config) {
 
-            for (let i = nobleGases.length - 1; i >= 0; i--) {
+            const nobleGases = [
+                { Z: 2,  symbol: "He", config: "1s2" },
+                { Z: 10, symbol: "Ne", config: "1s2 2s2 2p6" },
+                { Z: 18, symbol: "Ar", config: "1s2 2s2 2p6 3s2 3p6" },
+                { Z: 36, symbol: "Kr", config: "1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6" },
+                { Z: 54, symbol: "Xe", config: "1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6" }
+            ];
 
-                const noble = nobleGases[i];
+            let best = null;
 
+            // on cherche le plus grand cœur possible
+            for (let noble of nobleGases) {
                 if (config.startsWith(noble.config)) {
-
-                    let rest = config.replace(noble.config, "").trim();
-
-                    return `[${noble.symbol}] ${rest}`;
+                    best = noble;
                 }
             }
 
-            return config; // cas H et He
+            if (!best) return config;
+
+            let rest = config.slice(best.config.length).trim();
+
+            return `[${best.symbol}] ${rest}`;
         }
 
         // ===============================
