@@ -1,5 +1,4 @@
 // ===============================
-        const div = document.createElement("div");
         div.className = "element";
 
         div.innerHTML = `
