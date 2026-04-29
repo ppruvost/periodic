@@ -1,63 +1,53 @@
 body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    background-color: #f4f4f4;
+    background: #fafafa;
 }
 
-h1 {
-    margin-bottom: 10px;
-}
-
-#table {
-    display: grid;
-    grid-template-columns: repeat(18, 60px);
-    gap: 5px;
-    justify-content: center;
-    margin: 20px;
-}
-
-.element {
-    background: #ffffff;
-    border: 1px solid #ccc;
-    padding: 5px;
-    cursor: pointer;
-    font-size: 12px;
-    transition: transform 0.2s;
-}
-
-.element:hover {
-    transform: scale(1.1);
-    background: #e0f0ff;
-}
-
-.numero {
-    font-size: 10px;
-}
-
-.symbole {
-    font-size: 18px;
+.couches {
+    font-size: 22px;
     font-weight: bold;
-}
-
-.masse {
-    font-size: 10px;
-    color: #444;
-}
-
-#details {
-    margin-top: 20px;
-    padding: 10px;
-    background: white;
-    width: 300px;
-    margin-left: auto;
-    margin-right: auto;
-    border: 1px solid #ccc;
-}
-
-#info svg {
     margin-top: 10px;
 }
 
-#info text {
+.couche {
+    display: inline-block;
+    margin-right: 14px;
+}
+
+.couche sup,
+.spdf-line sup,
+.ion-config sup {
+    font-size: 13px;
+    vertical-align: super;
+}
+
+.spdf-line {
+    font-size: 22px;
     font-weight: bold;
+    margin-top: 10px;
+}
+
+.ion-line {
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.cation {
+    color: #1e5eff;
+    border: 1px solid #1e5eff;
+    background: #f3f7ff;
+}
+
+.anion {
+    color: #d62828;
+    border: 1px solid #d62828;
+    background: #fff5f5;
+}
+
+.ion-config {
+    margin-top: 8px;
+    font-size: 16px;
+    font-weight: normal;
 }
