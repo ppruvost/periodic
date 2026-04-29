@@ -199,30 +199,27 @@ fetch("elements.json")
         // ===============================
         function formatConfig(config) {
 
-            // 1. abréviation gaz noble
-            config = shortenConfig(config);
+    // abréviation gaz noble
+    config = shortenConfig(config);
 
-            // 2. séparer cœur [Ne] du reste
-            let coreMatch = config.match(/^\[(.*?)\]/);
+    let coreMatch = config.match(/^\[(.*?)\]/);
+    let core = "";
+    let rest = config;
 
-            let core = "";
-            let rest = config;
+    if (coreMatch) {
+        core = coreMatch[0];
+        rest = config.replace(core, "").trim();
+    }
 
-            if (coreMatch) {
-                core = coreMatch[0]; // ex: [Ar]
-                rest = config.replace(core, "").trim();
-            }
+    // IMPORTANT : on garde l’ordre naturel (PAS de reorder)
 
-            // 3. réorganiser (ordre scolaire)
-            rest = reorderForDisplay(rest);
+    // mise en forme des exposants
+    rest = rest.replace(/(\d+)([spdf])(\d+)/g, (m, n, t, e) => {
+        return `${n}${t}<sup>${e}</sup>`;
+    });
 
-            // 4. exposants
-            rest = rest.replace(/(\d+)([spdf])(\d+)/g, (m, n, t, e) => {
-                return `${n}${t}<sup>${e}</sup>`;
-            });
-
-            return core ? `${core} ${rest}` : rest;
-        }
+    return core ? `${core} ${rest}` : rest;
+}
 
         // ===============================
         // 5. Charges ioniques
