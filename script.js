@@ -132,9 +132,20 @@ fetch("elements.json")
 
         // exceptions connues
         const exceptionsConfig = {
-            24: "1s2 2s2 2p6 3s2 3p6 3d5 4s1",
-            29: "1s2 2s2 2p6 3s2 3p6 3d10 4s1"
+            24: "1s2 2s2 2p6 3s2 3p6 3d5 4s1",   // Cr
+            29: "1s2 2s2 2p6 3s2 3p6 3d10 4s1", // Cu
+            41: "1s2 2s2 2p6 3s2 3p6 4d4 5s1",  // Nb
+            42: "1s2 2s2 2p6 3s2 3p6 4d5 5s1"   // Mo
         };
+
+        // ===============================
+        // FORMATAGE SPDF (avec exposants)
+        // ===============================
+        function formatConfig(config) {
+            return config.replace(/(\d+)([spdf])(\d+)/g, (match, n, type, e) => {
+                return `${n}${type}<sup>${e}</sup>`;
+            });
+        }
 
         // ===============================
         // 5. Charges ioniques
@@ -307,7 +318,7 @@ fetch("elements.json")
 
                     ionsHTML += `
                     ${el.symbole}${charge > 0 ? "+" + charge : charge} :<br>
-                    → ${ionConfig}<br><br>`;
+                    → ${formatConfig(ionConfig)}<br><br>`;
                 });
 
                 const lewis = generateLewisAdvanced(el.symbole, valence);
@@ -318,7 +329,7 @@ fetch("elements.json")
                      Masse atomique : ${el.masse}<br><br>
 
                      <strong>Configuration électronique :</strong><br>
-                     ${baseConfig}<br><br>
+                     ${formatConfig(baseConfig)}<br><br>
 
                      <strong>Électrons de valence :</strong> ${valence ?? "—"}<br><br>
 
