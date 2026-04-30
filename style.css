@@ -10,10 +10,9 @@ h1 {
 
 #table {
     display: grid;
-    grid-template-columns: repeat(18, 60px);
-    gap: 5px;
-    justify-content: center;
-    margin: 20px;
+    grid-template-columns: repeat(18, 80px);
+    grid-template-rows: repeat(10, 80px);
+    gap: 6px;
 }
 
 .element {
