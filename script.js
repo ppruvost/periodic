@@ -395,7 +395,8 @@ fetch("elements.json")
             div.onclick = () => {
 
                 const charges = getIonCharges(el);
-                const baseConfig = exceptionsConfig[el.numero] || getElectronConfig(el.numero);
+                const fullConfig = exceptionsConfig[el.numero] || getElectronConfig(el.numero);
+                const baseConfig = shortenConfig(fullConfig);
 
                 let ionsHTML = "";
 
