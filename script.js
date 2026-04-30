@@ -171,7 +171,8 @@ fetch("elements.json")
             { Z: 10, symbol: "Ne", config: "1s2 2s2 2p6" },
             { Z: 18, symbol: "Ar", config: "1s2 2s2 2p6 3s2 3p6" },
             { Z: 36, symbol: "Kr", config: "1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6" },
-            { Z: 54, symbol: "Xe", config: "1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6" }
+            { Z: 54, symbol: "Xe", config: "1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6" },
+            { Z: 86, symbol: "Rn", config: "1s2 2s2 2p6 3s2 3p6 4s2 3d10 4p6 5s2 4d10 5p6 6s2 4f14 5d10 6p6" }
         ];
 
         // ===============================
