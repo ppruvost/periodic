@@ -489,4 +489,5 @@ data.forEach(el => {
     // ===============================
     table.appendChild(div);
 
+    });
 });
