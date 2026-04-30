@@ -291,89 +291,107 @@ fetch("elements.json")
         // ===============================
         function ionizeConfig(config, charge) {
 
-            // 1. détecter cœur gaz noble
-            let coreMatch = config.match(/^\[(.*?)\]/);
+    // sécurité : si config complète → on abrège d'abord
+    config = shortenConfig(config);
 
-            let core = "";
-            let rest = config;
+    let coreMatch = config.match(/^\[(.*?)\]/);
 
-            if (coreMatch) {
-                core = coreMatch[0]; // ex [Ar]
-                rest = config.replace(core, "").trim();
-            }
+    let core = "";
+    let rest = config;
 
-            // 2. transformer le reste en liste exploitable
-            let orbitals = rest
-                .split(" ")
-                .filter(Boolean)
-                .map(o => {
-                    let m = o.match(/(\d+)([spdf])(\d+)/);
-                    return {
-                        n: parseInt(m[1]),
-                        type: m[2],
-                        e: parseInt(m[3])
-                    };
-                });
+    if (coreMatch) {
+        core = coreMatch[0];
+        rest = config.replace(core, "").trim();
+    }
 
-            const order = { s: 1, p: 2, d: 3, f: 4 };
+    let orbitals = rest
+        .split(" ")
+        .filter(Boolean)
+        .map(o => {
+            let m = o.match(/(\d+)([spdf])(\d+)/);
 
-            // ======================
-            // CAS CATION (+)
-            // ======================
-            if (charge > 0) {
+            if (!m) return null;
 
-                let toRemove = charge;
+            return {
+                n: parseInt(m[1]),
+                type: m[2],
+                e: parseInt(m[3]),
+                max:
+                    m[2] === "s" ? 2 :
+                    m[2] === "p" ? 6 :
+                    m[2] === "d" ? 10 : 14
+            };
+        })
+        .filter(Boolean);
 
-                while (toRemove > 0) {
+    const order = { s: 1, p: 2, d: 3, f: 4 };
 
-                    // on enlève toujours les électrons les plus externes
-                    let orbital = orbitals
-                        .filter(o => o.e > 0)
-                        .sort((a, b) =>
-                            (b.n - a.n) || (order[b.type] - order[a.type])
-                        )[0];
+    // =====================
+    // CATION
+    // =====================
+    if (charge > 0) {
 
-                    if (!orbital) break;
+        let toRemove = charge;
 
-                    orbital.e--;
-                    toRemove--;
-                }
-            }
+        while (toRemove > 0) {
 
-            // ======================
-            // CAS ANION (-)
-            // ======================
-            if (charge < 0) {
+            // règle réelle :
+            // on enlève d'abord ns avant (n-1)d
 
-                let toAdd = Math.abs(charge);
-
-                while (toAdd > 0) {
-
-                    // on remplit la couche externe disponible
-                    let orbital = orbitals
-                        .filter(o => o.e < (o.type === "s" ? 2 : o.type === "p" ? 6 : o.type === "d" ? 10 : 14))
-                        .sort((a, b) =>
-                            (a.n - b.n) || (order[a.type] - order[b.type])
-                        )[0];
-
-                    if (!orbital) break;
-
-                    orbital.e++;
-                    toAdd--;
-                }
-            }
-
-            // 3. reconstruction propre
-            let result = orbitals
+            let orbital = orbitals
                 .filter(o => o.e > 0)
-                .map(o => `${o.n}${o.type}${o.e}`)
-                .join(" ");
+                .sort((a, b) => {
 
-            // 4. si tout est vidé → ion noble
-            if (!result) return core;
+                    // priorité aux orbitales s externes
+                    if (a.type === "s" && b.type !== "s" && a.n >= b.n) return -1;
+                    if (b.type === "s" && a.type !== "s" && b.n >= a.n) return 1;
 
-            return `${core} ${result}`.trim();
+                    return (b.n - a.n) || (order[b.type] - order[a.type]);
+                })[0];
+
+            if (!orbital) break;
+
+            orbital.e--;
+            toRemove--;
         }
+    }
+
+    // =====================
+    // ANION
+    // =====================
+    if (charge < 0) {
+
+        let toAdd = Math.abs(charge);
+
+        while (toAdd > 0) {
+
+            let orbital = orbitals
+                .filter(o => o.e < o.max)
+                .sort((a, b) =>
+                    (a.n - b.n) || (order[a.type] - order[b.type])
+                )[0];
+
+            if (!orbital) break;
+
+            orbital.e++;
+            toAdd--;
+        }
+    }
+
+    let result = orbitals
+        .filter(o => o.e > 0)
+        .sort((a, b) => {
+
+            if (a.n !== b.n) return a.n - b.n;
+            return order[a.type] - order[b.type];
+        })
+        .map(o => `${o.n}${o.type}${o.e}`)
+        .join(" ");
+
+    if (!result) return core;
+
+    return `${core} ${result}`.trim();
+}
 
         // ===============================
         // 7. Boucle principale
