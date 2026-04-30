@@ -53,11 +53,9 @@
 {"nom":"Tellure","symbole":"Te","numero":52,"masse":"127.60 g·mol⁻¹","colonne":16,"ligne":5},
 {"nom":"Iode","symbole":"I","numero":53,"masse":"126.90 g·mol⁻¹","colonne":17,"ligne":5},
 {"nom":"Xénon","symbole":"Xe","numero":54,"masse":"131.29 g·mol⁻¹","colonne":18,"ligne":5},
-,
 {"nom":"Césium","symbole":"Cs","numero":55,"masse":"132.91 g·mol⁻¹","colonne":1,"ligne":6},
 {"nom":"Baryum","symbole":"Ba","numero":56,"masse":"137.33 g·mol⁻¹","colonne":2,"ligne":6},
 {"nom":"Lanthane","symbole":"La","numero":57,"masse":"138.91 g·mol⁻¹","colonne":3,"ligne":6},
-
 {"nom":"Cérium","symbole":"Ce","numero":58,"masse":"140.12 g·mol⁻¹","colonne":4,"ligne":9},
 {"nom":"Praséodyme","symbole":"Pr","numero":59,"masse":"140.91 g·mol⁻¹","colonne":5,"ligne":9},
 {"nom":"Néodyme","symbole":"Nd","numero":60,"masse":"144.24 g·mol⁻¹","colonne":6,"ligne":9},
@@ -72,7 +70,6 @@
 {"nom":"Thulium","symbole":"Tm","numero":69,"masse":"168.93 g·mol⁻¹","colonne":15,"ligne":9},
 {"nom":"Ytterbium","symbole":"Yb","numero":70,"masse":"173.05 g·mol⁻¹","colonne":16,"ligne":9},
 {"nom":"Lutécium","symbole":"Lu","numero":71,"masse":"174.97 g·mol⁻¹","colonne":17,"ligne":9},
-
 {"nom":"Hafnium","symbole":"Hf","numero":72,"masse":"178.49 g·mol⁻¹","colonne":4,"ligne":6},
 {"nom":"Tantale","symbole":"Ta","numero":73,"masse":"180.95 g·mol⁻¹","colonne":5,"ligne":6},
 {"nom":"Tungstène","symbole":"W","numero":74,"masse":"183.84 g·mol⁻¹","colonne":6,"ligne":6},
