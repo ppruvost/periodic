@@ -10,23 +10,35 @@ fetch("elements.json")
         // ===============================
         // 2. Électrons de valence
         // ===============================
-        function getValence(colonne, numero) {
-            const exceptions = {
-                21: 3, 22: 4, 23: 5, 24: 6, 25: 7,
-                26: 2, 27: 2, 28: 2, 29: 1, 30: 2
-            };
+        function getValence(colonne, numero, config = "") {
 
-            if (exceptions[numero] !== undefined) return exceptions[numero];
+        // éléments des groupes principaux
+        const exceptions = {
+            21: 3, 22: 4, 23: 5, 24: 6, 25: 7,
+            26: 8, 27: 9, 28: 10, 29: 11, 30: 12
+        };
 
-            if (colonne === 1) return 1;
-            if (colonne === 2) return 2;
-            if (colonne >= 13 && colonne <= 18) return colonne - 10;
-
-            if (colonne >= 3 && colonne <= 12) return Math.min(colonne, 8);
-
-            return null;
+        if (exceptions[numero] !== undefined) {
+            return null; // on traitera autrement
         }
 
+        if (colonne === 1) return 1;
+        if (colonne === 2) return 2;
+        if (colonne >= 13 && colonne <= 18) return colonne - 10;
+
+        return null;
+    }
+        function getValenceTransition(config) {
+
+            const match4s = config.match(/4s(\d)/);
+            const match3d = config.match(/3d(\d)/);
+
+            const s = match4s ? parseInt(match4s[1]) : 0;
+            const d = match3d ? parseInt(match3d[1]) : 0;
+
+            return s + d;
+        }
+        
         // ===============================
         // 3. Lewis (doublets réels)
         // ===============================
@@ -398,7 +410,14 @@ fetch("elements.json")
 // ===============================
 data.forEach(el => {
 
-    let valence = getValence(el.colonne, el.numero);
+    let valence;
+
+    if (el.colonne >= 3 && el.colonne <= 12) {
+        const fullConfig = exceptionsConfig[el.numero] || getElectronConfig(el.numero);
+        valence = getValenceTransition(fullConfig);
+    } else {
+        valence = getValence(el.colonne, el.numero);
+    }
 
     if (valence !== null) {
         valence = Math.min(valence, 8);
