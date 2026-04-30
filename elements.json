@@ -1,7 +1,6 @@
 [
 {"nom":"Hydrogène","symbole":"H","numero":1,"masse":"1.008 g·mol⁻¹","colonne":1,"ligne":1},
 {"nom":"Hélium","symbole":"He","numero":2,"masse":"4.0026 g·mol⁻¹","colonne":18,"ligne":1},
-
 {"nom":"Lithium","symbole":"Li","numero":3,"masse":"6.94 g·mol⁻¹","colonne":1,"ligne":2},
 {"nom":"Béryllium","symbole":"Be","numero":4,"masse":"9.0122 g·mol⁻¹","colonne":2,"ligne":2},
 {"nom":"Bore","symbole":"B","numero":5,"masse":"10.81 g·mol⁻¹","colonne":13,"ligne":2},
@@ -10,7 +9,6 @@
 {"nom":"Oxygène","symbole":"O","numero":8,"masse":"15.999 g·mol⁻¹","colonne":16,"ligne":2},
 {"nom":"Fluor","symbole":"F","numero":9,"masse":"18.998 g·mol⁻¹","colonne":17,"ligne":2},
 {"nom":"Néon","symbole":"Ne","numero":10,"masse":"20.180 g·mol⁻¹","colonne":18,"ligne":2},
-
 {"nom":"Sodium","symbole":"Na","numero":11,"masse":"22.990 g·mol⁻¹","colonne":1,"ligne":3},
 {"nom":"Magnésium","symbole":"Mg","numero":12,"masse":"24.305 g·mol⁻¹","colonne":2,"ligne":3},
 {"nom":"Aluminium","symbole":"Al","numero":13,"masse":"26.982 g·mol⁻¹","colonne":13,"ligne":3},
@@ -19,7 +17,6 @@
 {"nom":"Soufre","symbole":"S","numero":16,"masse":"32.06 g·mol⁻¹","colonne":16,"ligne":3},
 {"nom":"Chlore","symbole":"Cl","numero":17,"masse":"35.45 g·mol⁻¹","colonne":17,"ligne":3},
 {"nom":"Argon","symbole":"Ar","numero":18,"masse":"39.948 g·mol⁻¹","colonne":18,"ligne":3},
-
 {"nom":"Potassium","symbole":"K","numero":19,"masse":"39.098 g·mol⁻¹","colonne":1,"ligne":4},
 {"nom":"Calcium","symbole":"Ca","numero":20,"masse":"40.078 g·mol⁻¹","colonne":2,"ligne":4},
 {"nom":"Scandium","symbole":"Sc","numero":21,"masse":"44.956 g·mol⁻¹","colonne":3,"ligne":4},
@@ -38,7 +35,6 @@
 {"nom":"Sélénium","symbole":"Se","numero":34,"masse":"78.971 g·mol⁻¹","colonne":16,"ligne":4},
 {"nom":"Brome","symbole":"Br","numero":35,"masse":"79.904 g·mol⁻¹","colonne":17,"ligne":4},
 {"nom":"Krypton","symbole":"Kr","numero":36,"masse":"83.798 g·mol⁻¹","colonne":18,"ligne":4},
-
 {"nom":"Rubidium","symbole":"Rb","numero":37,"masse":"85.468 g·mol⁻¹","colonne":1,"ligne":5},
 {"nom":"Strontium","symbole":"Sr","numero":38,"masse":"87.62 g·mol⁻¹","colonne":2,"ligne":5},
 {"nom":"Yttrium","symbole":"Y","numero":39,"masse":"88.906 g·mol⁻¹","colonne":3,"ligne":5},
