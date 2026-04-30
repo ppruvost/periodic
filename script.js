@@ -233,7 +233,10 @@ fetch("elements.json")
         // ===============================
         function formatConfig(config) {
 
-            // 1. gaz noble
+            // ===============================
+            // 1. Détection gaz noble
+            // ===============================
+
             let coreMatch = config.match(/^\[(.*?)\]/);
 
             let core = "";
@@ -244,17 +247,70 @@ fetch("elements.json")
                 rest = config.replace(core, "").trim();
             }
 
-            // 2. nettoyage
-            let parts = rest.split(" ").filter(Boolean);
+            // ===============================
+            // 2. Séparation orbitales
+            // ===============================
 
-            // 3. IMPORTANT : ne PAS trier
+            let parts = rest
+                .split(" ")
+                .filter(Boolean);
 
-            // 4. exposants
-            let formatted = parts.map(p => {
-                return p.replace(/(\d+)([spdf])(\d+)/, (m, n, t, e) => {
-                    return `${n}${t}<sup>${e}</sup>`;
-                });
+            // ===============================
+            // 3. TRI AFFICHAGE SCOLAIRE
+            // ex : 3d avant 4s
+            // ===============================
+
+            parts.sort((a, b) => {
+
+                const ma = a.match(/(\d+)([spdf])/);
+                const mb = b.match(/(\d+)([spdf])/);
+
+                if (!ma || !mb) return 0;
+
+                const na = parseInt(ma[1]);
+                const nb = parseInt(mb[1]);
+
+                const order = {
+                    s: 1,
+                    p: 2,
+                    d: 3,
+                    f: 4
+                };
+
+                // règle spéciale :
+                // 3d avant 4s
+                if (a.startsWith("3d") && b.startsWith("4s")) return -1;
+                if (a.startsWith("4s") && b.startsWith("3d")) return 1;
+
+                if (a.startsWith("4d") && b.startsWith("5s")) return -1;
+                if (a.startsWith("5s") && b.startsWith("4d")) return 1;
+
+                if (a.startsWith("4f") && b.startsWith("6s")) return -1;
+                if (a.startsWith("6s") && b.startsWith("4f")) return 1;
+
+                if (a.startsWith("5d") && b.startsWith("6s")) return -1;
+                if (a.startsWith("6s") && b.startsWith("5d")) return 1;
+
+                // sinon tri normal
+                if (na !== nb) return na - nb;
+
+                return order[ma[2]] - order[mb[2]];
             });
+
+            // ===============================
+            // 4. Exposants HTML
+            // ===============================
+
+            let formatted = parts.map(p => {
+                return p.replace(
+                    /(\d+)([spdf])(\d+)/,
+                    (m, n, t, e) => `${n}${t}<sup>${e}</sup>`
+                );
+            });
+
+            // ===============================
+            // 5. Retour final
+            // ===============================
 
             return core
                 ? `${core} ${formatted.join(" ")}`
@@ -263,19 +319,19 @@ fetch("elements.json")
         // ===============================
         // 5. Charges ioniques
         // ===============================
-        function getIonCharges(el) {
+         function getIonCharges(el) {
 
-    // ===============================
-    // 1. GROUPES PRINCIPAUX
-    // ===============================
+        // ===============================
+        // 1. GROUPES PRINCIPAUX
+        // ===============================
 
-    if (el.colonne === 1) return [+1];
-    if (el.colonne === 2) return [+2];
-    if (el.colonne === 13) return [+3]; // B, Al, Ga, In
-    if (el.colonne === 14) return [+4]; // C, Si, Ge, Sn
-    if (el.colonne === 15) return [-3];
-    if (el.colonne === 16) return [-2];
-    if (el.colonne === 17) return [-1];
+         if (el.colonne === 1) return [+1];
+         if (el.colonne === 2) return [+2];
+         if (el.colonne === 13) return [+3]; // B, Al, Ga, In
+         if (el.colonne === 14) return [+4]; // C, Si, Ge, Sn
+         if (el.colonne === 15) return [-3];
+         if (el.colonne === 16) return [-2];
+         if (el.colonne === 17) return [-1];
 
     // ===============================
     // 2. MÉTAUX DE TRANSITION (étendus)
