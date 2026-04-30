@@ -427,7 +427,7 @@ data.forEach(el => {
 
     if (el.colonne >= 3 && el.colonne <= 12) {
         const fullConfig = exceptionsConfig[el.numero] || getElectronConfig(el.numero);
-        valence = getValenceTransition(fullConfig);
+        valence = getValenceTransition(fullConfig, el.numero);
     } else {
         valence = getValence(el.colonne, el.numero);
     }
