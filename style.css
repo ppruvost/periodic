@@ -1,65 +1,138 @@
-body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    background-color: #f4f4f4;
+/* ===============================
+   RESET + BASE
+=============================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+    color: #222;
+    text-align: center;
+    padding: 20px;
+}
+
+/* ===============================
+   TITRES
+=============================== */
+
 h1 {
+    font-size: clamp(24px, 4vw, 42px);
     margin-bottom: 10px;
 }
 
+p {
+    font-size: clamp(14px, 2vw, 18px);
+    margin-bottom: 20px;
+}
+
+/* ===============================
+   TABLEAU RESPONSIVE
+=============================== */
+
 #table {
     display: grid;
-    grid-template-columns: repeat(18, 80px);
 
-    /* IMPORTANT */
-    grid-template-rows: repeat(10, 80px);
+    /* responsive automatique */
+    grid-template-columns: repeat(
+        auto-fit,
+        minmax(65px, 1fr)
+    );
 
-    gap: 6px;
-    justify-content: center;
-    margin: 20px auto;
+    gap: 8px;
+
+    width: 100%;
+    max-width: 1600px;
+    margin: 0 auto 30px auto;
+
+    padding: 10px;
 }
+
+/* ===============================
+   CASES ELEMENTS
+=============================== */
 
 .element {
     background: #ffffff;
-    border: 1px solid #ccc;
-    padding: 5px;
+    border: 1px solid #dcdcdc;
+    border-radius: 10px;
+    padding: 8px;
+
+    min-height: 75px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
     cursor: pointer;
-    font-size: 12px;
-    transition: transform 0.2s;
+
+    transition: 0.2s ease;
 }
 
 .element:hover {
-    transform: scale(1.1);
-    background: #e0f0ff;
+    transform: scale(1.05);
+    background: #e8f4ff;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
 }
 
 .numero {
-    font-size: 10px;
+    font-size: clamp(10px, 1.5vw, 13px);
+    margin-bottom: 4px;
 }
 
 .symbole {
-    font-size: 18px;
+    font-size: clamp(18px, 2vw, 28px);
     font-weight: bold;
+    line-height: 1;
 }
 
 .masse {
-    font-size: 10px;
-    color: #444;
+    font-size: clamp(10px, 1.5vw, 13px);
+    color: #555;
+    margin-top: 4px;
 }
 
+/* ===============================
+   DETAILS
+=============================== */
+
 #details {
-    margin-top: 20px;
-    padding: 10px;
     background: white;
-    width: 300px;
-    margin-left: auto;
-    margin-right: auto;
-    border: 1px solid #ccc;
+    border: 1px solid #ddd;
+    border-radius: 14px;
+
+    width: min(100%, 700px);
+
+    margin: 0 auto;
+    padding: 25px;
+
+    text-align: left;
+
+    box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+}
+
+#details h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: clamp(22px, 3vw, 30px);
+}
+
+#info {
+    font-size: clamp(14px, 2vw, 18px);
+    line-height: 1.7;
+    word-wrap: break-word;
 }
 
 #info svg {
-    margin-top: 10px;
+    display: block;
+    margin: 20px auto;
+    max-width: 100%;
+    height: auto;
 }
 
 #info text {
@@ -67,6 +140,109 @@ h1 {
 }
 
 sup {
-    font-size: 10px;
+    font-size: 0.7em;
     vertical-align: super;
+}
+
+/* ===============================
+   TABLET
+=============================== */
+
+@media (max-width: 1024px) {
+    body {
+        padding: 15px;
+    }
+
+    #table {
+        gap: 6px;
+    }
+
+    .element {
+        min-height: 70px;
+        padding: 6px;
+    }
+
+    #details {
+        padding: 20px;
+    }
+}
+
+/* ===============================
+   MOBILE
+=============================== */
+
+@media (max-width: 768px) {
+
+    body {
+        padding: 10px;
+    }
+
+    h1 {
+        margin-bottom: 8px;
+    }
+
+    #table {
+        grid-template-columns: repeat(
+            auto-fit,
+            minmax(55px, 1fr)
+        );
+
+        gap: 5px;
+        padding: 5px;
+    }
+
+    .element {
+        min-height: 60px;
+        border-radius: 8px;
+    }
+
+    .symbole {
+        font-size: 18px;
+    }
+
+    .masse {
+        display: none;
+        /* mobile plus propre */
+    }
+
+    #details {
+        padding: 16px;
+        border-radius: 10px;
+    }
+
+    #info {
+        font-size: 14px;
+        line-height: 1.6;
+    }
+}
+
+/* ===============================
+   PETIT SMARTPHONE
+=============================== */
+
+@media (max-width: 480px) {
+
+    #table {
+        grid-template-columns: repeat(
+            auto-fit,
+            minmax(48px, 1fr)
+        );
+    }
+
+    .element {
+        min-height: 55px;
+        padding: 4px;
+    }
+
+    .numero {
+        font-size: 9px;
+    }
+
+    .symbole {
+        font-size: 16px;
+    }
+
+    #details {
+        padding: 14px;
+    }
 }
