@@ -101,5 +101,7 @@
 {"nom":"Fermium","symbole":"Fm","numero":100,"masse":"257 g·mol⁻¹","colonne":14,"ligne":10},
 {"nom":"Mendélévium","symbole":"Md","numero":101,"masse":"258 g·mol⁻¹","colonne":15,"ligne":10},
 {"nom":"Nobélium","symbole":"No","numero":102,"masse":"259 g·mol⁻¹","colonne":16,"ligne":10},
-{"nom":"Lawrencium","symbole":"Lr","numero":103,"masse":"266 g·mol⁻¹","colonne":17,"ligne":10}
+{"nom":"Lawrencium","symbole":"Lr","numero":103,"masse":"266 g·mol⁻¹","colonne":17,"ligne":10},
+{"nom":"Rutherfordium","symbole":"Rf","numero":104,"masse":"267 g·mol⁻¹","colonne":4,"ligne":10},
+{"nom":"Dubnium","symbole":"Db","numero":105,"masse":"268 g·mol⁻¹","colonne":5,"ligne":10}
 ]
