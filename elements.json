@@ -55,7 +55,9 @@
 {"nom":"Xénon","symbole":"Xe","numero":54,"masse":"131.29 g·mol⁻¹","colonne":18,"ligne":5},
 {"nom":"Césium","symbole":"Cs","numero":55,"masse":"132.91 g·mol⁻¹","colonne":1,"ligne":6},
 {"nom":"Baryum","symbole":"Ba","numero":56,"masse":"137.33 g·mol⁻¹","colonne":2,"ligne":6},
+
 {"nom":"Lanthane","symbole":"La","numero":57,"masse":"138.91 g·mol⁻¹","colonne":3,"ligne":6},
+
 {"nom":"Cérium","symbole":"Ce","numero":58,"masse":"140.12 g·mol⁻¹","colonne":4,"ligne":9},
 {"nom":"Praséodyme","symbole":"Pr","numero":59,"masse":"140.91 g·mol⁻¹","colonne":5,"ligne":9},
 {"nom":"Néodyme","symbole":"Nd","numero":60,"masse":"144.24 g·mol⁻¹","colonne":6,"ligne":9},
@@ -70,6 +72,7 @@
 {"nom":"Thulium","symbole":"Tm","numero":69,"masse":"168.93 g·mol⁻¹","colonne":15,"ligne":9},
 {"nom":"Ytterbium","symbole":"Yb","numero":70,"masse":"173.05 g·mol⁻¹","colonne":16,"ligne":9},
 {"nom":"Lutécium","symbole":"Lu","numero":71,"masse":"174.97 g·mol⁻¹","colonne":17,"ligne":9},
+
 {"nom":"Hafnium","symbole":"Hf","numero":72,"masse":"178.49 g·mol⁻¹","colonne":4,"ligne":6},
 {"nom":"Tantale","symbole":"Ta","numero":73,"masse":"180.95 g·mol⁻¹","colonne":5,"ligne":6},
 {"nom":"Tungstène","symbole":"W","numero":74,"masse":"183.84 g·mol⁻¹","colonne":6,"ligne":6},
@@ -85,23 +88,26 @@
 {"nom":"Polonium","symbole":"Po","numero":84,"masse":"209 g·mol⁻¹","colonne":16,"ligne":6},
 {"nom":"Astate","symbole":"At","numero":85,"masse":"210 g·mol⁻¹","colonne":17,"ligne":6},
 {"nom":"Radon","symbole":"Rn","numero":86,"masse":"222 g·mol⁻¹","colonne":18,"ligne":6},
+
 {"nom":"Francium","symbole":"Fr","numero":87,"masse":"223 g·mol⁻¹","colonne":1,"ligne":7},
 {"nom":"Radium","symbole":"Ra","numero":88,"masse":"226 g·mol⁻¹","colonne":2,"ligne":7},
-{"nom":"Actinium","symbole":"Ac","numero":89,"masse":"227 g·mol⁻¹","colonne":3,"ligne":7},
-{"nom":"Thorium","symbole":"Th","numero":90,"masse":"232.04 g·mol⁻¹","colonne":4,"ligne":10},
-{"nom":"Protactinium","symbole":"Pa","numero":91,"masse":"231.04 g·mol⁻¹","colonne":5,"ligne":10},
-{"nom":"Uranium","symbole":"U","numero":92,"masse":"238.03 g·mol⁻¹","colonne":6,"ligne":10},
-{"nom":"Neptunium","symbole":"Np","numero":93,"masse":"237 g·mol⁻¹","colonne":7,"ligne":10},
-{"nom":"Plutonium","symbole":"Pu","numero":94,"masse":"244 g·mol⁻¹","colonne":8,"ligne":10},
-{"nom":"Américium","symbole":"Am","numero":95,"masse":"243 g·mol⁻¹","colonne":9,"ligne":10},
-{"nom":"Curium","symbole":"Cm","numero":96,"masse":"247 g·mol⁻¹","colonne":10,"ligne":10},
-{"nom":"Berkélium","symbole":"Bk","numero":97,"masse":"247 g·mol⁻¹","colonne":11,"ligne":10},
-{"nom":"Californium","symbole":"Cf","numero":98,"masse":"251 g·mol⁻¹","colonne":12,"ligne":10},
-{"nom":"Einsteinium","symbole":"Es","numero":99,"masse":"252 g·mol⁻¹","colonne":13,"ligne":10},
-{"nom":"Fermium","symbole":"Fm","numero":100,"masse":"257 g·mol⁻¹","colonne":14,"ligne":10},
-{"nom":"Mendélévium","symbole":"Md","numero":101,"masse":"258 g·mol⁻¹","colonne":15,"ligne":10},
-{"nom":"Nobélium","symbole":"No","numero":102,"masse":"259 g·mol⁻¹","colonne":16,"ligne":10},
-{"nom":"Lawrencium","symbole":"Lr","numero":103,"masse":"266 g·mol⁻¹","colonne":17,"ligne":10},
-{"nom":"Rutherfordium","symbole":"Rf","numero":104,"masse":"267 g·mol⁻¹","colonne":4,"ligne":10},
-{"nom":"Dubnium","symbole":"Db","numero":105,"masse":"268 g·mol⁻¹","colonne":5,"ligne":10}
+
+{"nom":"Actinium","symbole":"Ac","numero":89,"masse":"227 g·mol⁻¹","colonne":4,"ligne":10},
+{"nom":"Thorium","symbole":"Th","numero":90,"masse":"232.04 g·mol⁻¹","colonne":5,"ligne":10},
+{"nom":"Protactinium","symbole":"Pa","numero":91,"masse":"231.04 g·mol⁻¹","colonne":6,"ligne":10},
+{"nom":"Uranium","symbole":"U","numero":92,"masse":"238.03 g·mol⁻¹","colonne":7,"ligne":10},
+{"nom":"Neptunium","symbole":"Np","numero":93,"masse":"237 g·mol⁻¹","colonne":8,"ligne":10},
+{"nom":"Plutonium","symbole":"Pu","numero":94,"masse":"244 g·mol⁻¹","colonne":9,"ligne":10},
+{"nom":"Américium","symbole":"Am","numero":95,"masse":"243 g·mol⁻¹","colonne":10,"ligne":10},
+{"nom":"Curium","symbole":"Cm","numero":96,"masse":"247 g·mol⁻¹","colonne":11,"ligne":10},
+{"nom":"Berkélium","symbole":"Bk","numero":97,"masse":"247 g·mol⁻¹","colonne":12,"ligne":10},
+{"nom":"Californium","symbole":"Cf","numero":98,"masse":"251 g·mol⁻¹","colonne":13,"ligne":10},
+{"nom":"Einsteinium","symbole":"Es","numero":99,"masse":"252 g·mol⁻¹","colonne":14,"ligne":10},
+{"nom":"Fermium","symbole":"Fm","numero":100,"masse":"257 g·mol⁻¹","colonne":15,"ligne":10},
+{"nom":"Mendélévium","symbole":"Md","numero":101,"masse":"258 g·mol⁻¹","colonne":16,"ligne":10},
+{"nom":"Nobélium","symbole":"No","numero":102,"masse":"259 g·mol⁻¹","colonne":17,"ligne":10},
+{"nom":"Lawrencium","symbole":"Lr","numero":103,"masse":"266 g·mol⁻¹","colonne":18,"ligne":10},
+
+{"nom":"Rutherfordium","symbole":"Rf","numero":104,"masse":"267 g·mol⁻¹","colonne":4,"ligne":7},
+{"nom":"Dubnium","symbole":"Db","numero":105,"masse":"268 g·mol⁻¹","colonne":5,"ligne":7}
 ]
