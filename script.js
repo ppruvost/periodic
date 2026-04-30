@@ -28,15 +28,28 @@ fetch("elements.json")
 
         return null;
     }
-        function getValenceTransition(config) {
+        function getValenceTransition(config, numero) {
 
-            const match4s = config.match(/4s(\d)/);
-            const match3d = config.match(/3d(\d)/);
+            // Cas particuliers importants
+            const exceptions = {
+                24: 1, // Cr : [Ar] 3d5 4s1
+                29: 1, // Cu : [Ar] 3d10 4s1
+                41: 1, // Nb
+                42: 1  // Mo
+            };
 
-            const s = match4s ? parseInt(match4s[1]) : 0;
-            const d = match3d ? parseInt(match3d[1]) : 0;
+            if (exceptions[numero] !== undefined) {
+        return exceptions[numero];
+            }
 
-            return s + d;
+            // On prend surtout les électrons ns externes
+            const matchS = config.match(/([4-7])s(\d)/);
+
+            if (matchS) {
+        return parseInt(matchS[2]);
+            }
+
+            return null;
         }
         
         // ===============================
