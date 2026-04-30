@@ -240,14 +240,14 @@ fetch("elements.json")
             let rest = config;
 
             if (coreMatch) {
-                core = coreMatch[0]; // ex [Ar]
+                core = coreMatch[0];
                 rest = config.replace(core, "").trim();
             }
 
-            // 2. nettoyage : on garde juste les orbitales restantes
+            // 2. nettoyage
             let parts = rest.split(" ").filter(Boolean);
 
-            // 3. IMPORTANT : ne PAS trier (sinon tu casses l’ordre chimique réel)
+            // 3. IMPORTANT : ne PAS trier
 
             // 4. exposants
             let formatted = parts.map(p => {
@@ -256,10 +256,10 @@ fetch("elements.json")
                 });
             });
 
-            // 5. assemblage propre
-            return core ? `${core} ${formatted.join(" ")}` : formatted.join(" ");
+            return core
+                ? `${core} ${formatted.join(" ")}`
+                : formatted.join(" ");
         }
-
         // ===============================
         // 5. Charges ioniques
         // ===============================
