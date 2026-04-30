@@ -393,73 +393,100 @@ fetch("elements.json")
     return `${core} ${result}`.trim();
 }
 
-        // ===============================
-        // 7. Boucle principale
-        // ===============================
-        data.forEach(el => {
+// ===============================
+// 7. Boucle principale (CORRIGÉE)
+// ===============================
+data.forEach(el => {
 
-            let valence = getValence(el.colonne, el.numero);
-            if (valence !== null) valence = Math.min(valence, 8);
+    let valence = getValence(el.colonne, el.numero);
 
-            const div = document.createElement("div");
-            div.className = "element";
+    if (valence !== null) {
+        valence = Math.min(valence, 8);
+    }
 
-            div.innerHTML = `
-                <div class="numero">${el.numero}</div>
-                <div class="symbole">${el.symbole}</div>
-                <div class="masse">${el.masse}</div>
+    const div = document.createElement("div");
+    div.className = "element";
+
+    div.innerHTML = `
+        <div class="numero">${el.numero}</div>
+        <div class="symbole">${el.symbole}</div>
+        <div class="masse">${el.masse}</div>
+    `;
+
+    // ===============================
+    // Placement dans le tableau
+    // ===============================
+    div.style.gridColumn = el.colonne || 1;
+    div.style.gridRow = el.ligne || 1;
+
+    // ===============================
+    // Clic sur un élément
+    // ===============================
+    div.onclick = () => {
+
+        const charges = getIonCharges(el);
+
+        const fullConfig =
+            exceptionsConfig[el.numero] || getElectronConfig(el.numero);
+
+        const baseConfig = shortenConfig(fullConfig);
+
+        let ionsHTML = "";
+
+        charges.forEach(charge => {
+
+            if (charge === 0) return;
+
+            let ionConfig;
+
+            // ---------------------------
+            // CATION
+            // ---------------------------
+            if (charge > 0) {
+                ionConfig = ionizeConfig(baseConfig, charge);
+            }
+
+            // ---------------------------
+            // ANION
+            // ---------------------------
+            else {
+                const newZ = el.numero + Math.abs(charge);
+                ionConfig = getElectronConfig(newZ);
+            }
+
+            ionsHTML += `
+                ${el.symbole}${charge > 0 ? "+" + charge : charge} :<br>
+                → ${formatConfig(ionConfig)}<br><br>
             `;
-
-            div.onclick = () => {
-
-                const charges = getIonCharges(el);
-                const fullConfig = exceptionsConfig[el.numero] || getElectronConfig(el.numero);
-                const baseConfig = shortenConfig(fullConfig);
-
-                let ionsHTML = "";
-
-                charges.forEach(charge => {
-
-                    if (charge === 0) return;
-
-                    let ionConfig;
-
-                    if (charge > 0) {
-                        // cation → enlever électrons
-                        ionConfig = ionizeConfig(baseConfig, charge);
-                    } else {
-                        // anion → recalcul complet avec électrons en plus
-                        const newZ = el.numero + Math.abs(charge);
-                        ionConfig = getElectronConfig(newZ);
-                    }
-
-                    ionsHTML += `
-                    ${el.symbole}${charge > 0 ? "+" + charge : charge} :<br>
-                    → ${formatConfig(ionConfig)}<br><br>`;
-                });
-
-                const lewis = generateLewisAdvanced(el.symbole, valence);
-
-                document.getElementById("info").innerHTML =
-                    `<strong>${el.nom}</strong><br>
-                     Numéro atomique : ${el.numero}<br>
-                     Masse atomique : ${el.masse}<br><br>
-
-                     <strong>Configuration électronique :</strong><br>
-                     ${formatConfig(baseConfig)}<br><br>
-
-                     <strong>Électrons de valence :</strong> ${valence ?? "—"}<br><br>
-
-                     <strong>Structure de Lewis :</strong><br>
-                     ${lewis}<br><br>
-
-                     <strong>Ions possibles :</strong><br>
-                     ${ionsHTML || "—"}`;
-            };
-
-            div.style.gridColumn = el.colonne;
-            div.style.gridRow = el.ligne;
-
-            table.appendChild(div);
         });
-    });
+
+        const lewis = generateLewisAdvanced(
+            el.symbole,
+            valence
+        );
+
+        document.getElementById("info").innerHTML = `
+            <strong>${el.nom}</strong><br>
+            Numéro atomique : ${el.numero}<br>
+            Masse atomique : ${el.masse}<br><br>
+
+            <strong>Configuration électronique :</strong><br>
+            ${formatConfig(baseConfig)}<br><br>
+
+            <strong>Électrons de valence :</strong>
+            ${valence ?? "—"}<br><br>
+
+            <strong>Structure de Lewis :</strong><br>
+            ${lewis}<br><br>
+
+            <strong>Ions possibles :</strong><br>
+            ${ionsHTML || "—"}
+        `;
+    };
+
+    // ===============================
+    // Ajout dans le tableau
+    // ===============================
+    table.appendChild(div);
+
+});
