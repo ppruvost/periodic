@@ -11,8 +11,13 @@ h1 {
 #table {
     display: grid;
     grid-template-columns: repeat(18, 80px);
+
+    /* IMPORTANT */
     grid-template-rows: repeat(10, 80px);
+
     gap: 6px;
+    justify-content: center;
+    margin: 20px auto;
 }
 
 .element {
