@@ -35,7 +35,8 @@ fetch("elements.json")
                 24: 1, // Cr : [Ar] 3d5 4s1
                 29: 1, // Cu : [Ar] 3d10 4s1
                 41: 1, // Nb
-                42: 1  // Mo
+                42: 1,  // Mo
+                57: 3 // La
             };
 
             if (exceptions[numero] !== undefined) {
