@@ -536,6 +536,28 @@ let row = Number(el.ligne);
 
         const charges = getIonCharges(el);
 
+        // ===============================
+        // Type d’ions possibles
+        // ===============================
+
+        let hasCation = charges.some(c => c > 0);
+        let hasAnion = charges.some(c => c < 0);
+
+        let ionType = "";
+
+        if (hasCation && hasAnion) {
+            ionType = "anion, cation";
+        }
+        else if (hasCation) {
+            ionType = "cation";
+        }
+        else if (hasAnion) {
+            ionType = "anion";
+        }
+        else {
+            ionType = "—";
+        }
+
         const fullConfig =
             exceptionsConfig[el.numero] || getElectronConfig(el.numero);
 
@@ -589,7 +611,7 @@ let row = Number(el.ligne);
             <strong>Structure de Lewis :</strong><br>
             ${lewis}<br><br>
 
-            <strong>Ions possibles :</strong><br>
+            <strong>Ions possibles :</strong> ${ionType}<br><br>
             ${ionsHTML || "—"}
         `;
     };
