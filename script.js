@@ -508,13 +508,22 @@ data.forEach(el => {
     // ===============================
     // Placement dans le tableau
     // ===============================
-    let col = Number(el.colonne);
-    let row = Number(el.ligne);
+let col = Number(el.colonne);
+let row = Number(el.ligne);
 
-    // Correction spéciale pour Actinium (Ac)
+// ===============================
+// Exceptions actinides
+// ===============================
+
+    // Actinium
     if (el.numero === 89) {
-        col = 3;   // même colonne que La
-        row = 7;   // ligne des actinides affichée séparément
+        col = 3;
+        row = 7;
+    }
+
+    // Thorium → Lawrencium
+    if (el.numero >= 90 && el.numero <= 103) {
+        col = col - 1;   // on décale d'une colonne vers la gauche
     }
 
     div.style.gridColumn = col;
