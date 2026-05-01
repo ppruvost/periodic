@@ -508,8 +508,17 @@ data.forEach(el => {
     // ===============================
     // Placement dans le tableau
     // ===============================
-    div.style.gridColumn = el.colonne || 1;
-    div.style.gridRow = el.ligne || 1;
+    let col = Number(el.colonne);
+    let row = Number(el.ligne);
+
+    // Correction spéciale pour Actinium (Ac)
+    if (el.numero === 89) {
+        col = 3;   // même colonne que La
+        row = 8;   // ligne des actinides affichée séparément
+    }
+
+    div.style.gridColumn = col;
+    div.style.gridRow = row;
 
     // ===============================
     // Clic sur un élément
