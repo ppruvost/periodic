@@ -586,10 +586,21 @@ let row = Number(el.ligne);
                 ionConfig = getElectronConfig(newZ);
             }
 
-            ionsHTML += `
-                ${el.symbole}${charge > 0 ? "+" + charge : charge} :<br>
-                → ${formatConfig(ionConfig)}<br><br>
-            `;
+            let chargeDisplay = "";
+
+            if (charge > 0) {
+                // cations : Fe²⁺, Cr³⁺
+                chargeDisplay = `<sup>${charge === 1 ? "" : charge}+</sup>`;
+            } else {
+                // anions : Cl⁻, O²⁻
+                const absCharge = Math.abs(charge);
+                chargeDisplay = `<sup>${absCharge === 1 ? "" : absCharge}−</sup>`;
+            }
+
+ionsHTML += `
+    ${el.symbole}${chargeDisplay} :<br>
+    → ${formatConfig(ionConfig)}<br><br>
+`;
         });
 
         const lewis = generateLewisAdvanced(
