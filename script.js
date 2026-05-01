@@ -514,7 +514,7 @@ data.forEach(el => {
     // Correction spéciale pour Actinium (Ac)
     if (el.numero === 89) {
         col = 3;   // même colonne que La
-        row = 8;   // ligne des actinides affichée séparément
+        row = 7;   // ligne des actinides affichée séparément
     }
 
     div.style.gridColumn = col;
