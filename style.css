@@ -69,6 +69,7 @@ p {
     cursor: pointer;
 
     transition: 0.2s ease;
+    font-weight: 600;
 }
 
 .element:hover {
