@@ -727,10 +727,20 @@ ionsHTML += `
 `;
         });
 
-        const lewis = generateLewisAdvanced(
-            el.symbole,
-            valence
-        );
+        const lewis = `
+        <div style="
+            background:${getLewisBackground(el)};
+            padding:10px;
+            border-radius:8px;
+            display:inline-block;
+        ">
+            ${generateLewisAdvanced(el.symbole, valence)}
+        </div>
+        `;
+
+        const family = getChemicalFamily(el);
+        const tendency = getRedoxTendency(el);
+        const redoxCouples = getRedoxCouples(el);
 
         document.getElementById("info").innerHTML = `
             <strong>${el.nom}</strong><br>
