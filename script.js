@@ -503,7 +503,7 @@ data.forEach(el => {
     const bacProColors = {
 
         // Non-métaux importants
-        1:  "#ffffff", // H
+        1:  "#E8F4FF", // H
         6:  "#909090", // C
         7:  "#3050F8", // N
         8:  "#FF0D0D", // O
