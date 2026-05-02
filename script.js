@@ -621,6 +621,12 @@ data.forEach(el => {
     if (bacProColors[el.numero]) {
         div.style.backgroundColor = bacProColors[el.numero];
     }
+    if (el.numero === 7) {
+        div.style.color = "white";
+    }
+    if (el.numero === 82) {
+        div.style.color = "white";
+    }
 
     div.innerHTML = `
         <div class="numero">${el.numero}</div>
