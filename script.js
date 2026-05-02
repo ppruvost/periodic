@@ -583,7 +583,8 @@ let row = Number(el.ligne);
             // ---------------------------
             else {
                 const newZ = el.numero + Math.abs(charge);
-                ionConfig = getElectronConfig(newZ);
+                const fullAnionConfig = getElectronConfig(newZ);
+                ionConfig = shortenConfig(fullAnionConfig);
             }
 
             let chargeDisplay = "";
