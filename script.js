@@ -757,7 +757,17 @@ ionsHTML += `
             ${lewis}<br><br>
 
             <strong>Ions possibles :</strong> ${ionType}<br><br>
+
             ${ionsHTML || "—"}
+
+            <strong>Tendance :</strong><br>
+            ${tendency}<br><br>
+
+            <strong>Famille chimique :</strong><br>
+            ${family}<br><br>
+
+            <strong>Couples RedOx utiles (Bac Pro) :</strong><br>
+            ${redoxCouples}
         `;
     };
 
