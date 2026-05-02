@@ -638,12 +638,6 @@ data.forEach(el => {
         }
     }
 
-    div.innerHTML = `
-        <div class="numero">${el.numero}</div>
-        <div class="symbole">${el.symbole}</div>
-        <div class="masse">${el.masse}</div>
-    `;
-
     // ===============================
     // Placement dans le tableau
     // ===============================
