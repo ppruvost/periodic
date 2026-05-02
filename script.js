@@ -372,6 +372,85 @@ fetch("elements.json")
 }
 
         // ===============================
+        // Famille chimique
+        // ===============================
+        function getChemicalFamily(el) {
+
+            if (el.colonne === 1) return "Alcalin";
+            if (el.colonne === 2) return "Alcalino-terreux";
+            if (el.colonne === 17) return "Halogène";
+            if (el.colonne === 18) return "Gaz noble";
+
+            if ([6,7,8,15,16].includes(el.numero)) {
+                return "Non-métal";
+            }
+
+            if (el.colonne >= 3 && el.colonne <= 12) {
+                return "Métal de transition";
+            }
+
+            if ([13,26,29,30,47,79,82].includes(el.numero)) {
+                return "Métal";
+            }
+
+            return "Métal";
+        }
+
+        // ===============================
+        // Tendance RedOx
+        // ===============================
+        function getRedoxTendency(el) {
+
+            if ([8,17].includes(el.numero)) {
+                return "gagne des électrons → oxydant";
+            }
+
+            if ([1,15,16].includes(el.numero)) {
+                return "peut gagner des électrons";
+            }
+
+            if (
+                [3,11,19,4,12,20,13,26,29,30].includes(el.numero)
+            ) {
+                return "perd des électrons → réducteur";
+            }
+
+            return "variable";
+        }
+
+        // ===============================
+        // Couples RedOx Bac Pro
+        // ===============================
+        function getRedoxCouples(el) {
+
+            const couples = {
+                26: "Fe²⁺ / Fe ; Fe³⁺ / Fe²⁺",
+                29: "Cu²⁺ / Cu",
+                30: "Zn²⁺ / Zn",
+                13: "Al³⁺ / Al",
+                8:  "O₂ / H₂O",
+                17: "Cl₂ / Cl⁻",
+                1:  "H⁺ / H₂"
+            };
+
+            return couples[el.numero] || "—";
+        }
+
+        // ===============================
+        // Couleur fond Lewis
+        // ===============================
+        function getLewisBackground(el) {
+
+            if ([8].includes(el.numero)) return "#FFE5E5"; // rouge pâle
+            if ([17].includes(el.numero)) return "#E8FFE8"; // vert pâle
+            if ([26,29,30,13].includes(el.numero)) return "#FFF1E0"; // orange pâle
+            if ([18,2,10].includes(el.numero)) return "#EAFBFF"; // noble
+            if ([1].includes(el.numero)) return "#E8F4FF"; // H
+
+            return "#FFFFFF";
+        }
+
+        // ===============================
         // 6. Ionisation réelle
         // ===============================
         function ionizeConfig(config, charge) {
