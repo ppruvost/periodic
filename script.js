@@ -496,8 +496,52 @@ data.forEach(el => {
         valence = Math.min(valence, 8);
     }
 
+    // ===============================
+// Couleurs Bac Pro (programme)
+// ===============================
+
+    const bacProColors = {
+
+        // Non-métaux importants
+        1:  "#ffffff", // H
+        6:  "#909090", // C
+        7:  "#3050F8", // N
+        8:  "#FF0D0D", // O
+        15: "#FF8000", // P
+        16: "#FFFF30", // S
+        17: "#1FF01F", // Cl
+
+        // Gaz nobles
+        2:  "#D9FFFF", // He
+        10: "#D9FFFF", // Ne
+        18: "#D9FFFF", // Ar
+
+        // Alcalins / alcalino-terreux
+        3:  "#CC80FF", // Li
+        11: "#CC80FF", // Na
+        19: "#CC80FF", // K
+
+        4:  "#C2FF00", // Be
+        12: "#C2FF00", // Mg
+        20: "#C2FF00", // Ca
+
+        // Métaux courants
+        13: "#BFA6A6", // Al
+        14: "#F0C8A0", // Si
+        26: "#E06633", // Fe
+        29: "#C88033", // Cu
+        30: "#7D80B0", // Zn
+        47: "#C0C0C0", // Ag
+        79: "#FFD123", // Au
+        82: "#575961"  // Pb
+    };
+
     const div = document.createElement("div");
     div.className = "element";
+
+    if (bacProColors[el.numero]) {
+        div.style.backgroundColor = bacProColors[el.numero];
+    }
 
     div.innerHTML = `
         <div class="numero">${el.numero}</div>
