@@ -620,12 +620,14 @@ data.forEach(el => {
 
     if (bacProColors[el.numero]) {
         div.style.backgroundColor = bacProColors[el.numero];
-    }
-    if (el.numero === 7) {
+        
+    if ([7, 82].includes(el.numero)) {
         div.style.color = "white";
-    }
-    if (el.numero === 82) {
-        div.style.color = "white";
+
+        const masseDiv = div.querySelector(".masse");
+        if (masseDiv) {
+            masseDiv.style.color = "white";
+        }
     }
 
     div.innerHTML = `
