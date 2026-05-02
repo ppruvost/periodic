@@ -620,7 +620,15 @@ data.forEach(el => {
 
     if (bacProColors[el.numero]) {
         div.style.backgroundColor = bacProColors[el.numero];
-        
+    }
+
+    div.innerHTML = `
+        <div class="numero">${el.numero}</div>
+        <div class="symbole">${el.symbole}</div>
+        <div class="masse">${el.masse}</div>
+    `;
+
+    // texte blanc pour N et Pb
     if ([7, 82].includes(el.numero)) {
         div.style.color = "white";
 
